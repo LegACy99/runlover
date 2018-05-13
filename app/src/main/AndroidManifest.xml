@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCGVo214SK12EFJ2Txerk6WC4zRBYrmSN0" />
+            android:value="INSERT API KEY HERE" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -31,8 +31,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TrackActivity" />
-        <activity android:name=".DetailActivity" />
+        <activity
+            android:name=".TrackActivity"
+            android:label="@string/title_activity_track"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DetailActivity"
+            android:label="@string/title_activity_detail"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

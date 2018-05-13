@@ -9,45 +9,35 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.activity_home.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
     companion object {
-        const val EXTRA_DATE = "date"
-        const val EXTRA_DISTANCE = "distance"
-        const val EXTRA_DURATION = "duration"
-        const val EXTRA_START_LAT = "start_latitude"
-        const val EXTRA_START_LONG = "start_longitude"
-        const val EXTRA_FINISH_LAT = "finish_latitude"
-        const val EXTRA_FINISH_LONG = "finish_longitude"
+        const val EXTRA_DATA = "data"
     }
 
-    private lateinit var mStart: LatLng
-    private lateinit var mFinish: LatLng
+    private lateinit var mData: RunData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
+        setSupportActionBar(toolbar)
 
-        var date: Long = intent.getLongExtra(EXTRA_DATE, 0)
-        var duration: Long = intent.getLongExtra(EXTRA_DURATION, 0)
-        var distance: Float = intent.getFloatExtra(EXTRA_DISTANCE, 0f)
-        mStart = LatLng(intent.getDoubleExtra(EXTRA_START_LAT, 0.0),
-                        intent.getDoubleExtra(EXTRA_START_LONG, 0.0))
-        mFinish = LatLng(intent.getDoubleExtra(EXTRA_FINISH_LAT, 0.0),
-                         intent.getDoubleExtra(EXTRA_FINISH_LONG, 0.0))
+        var extra = intent.getSerializableExtra(EXTRA_DATA) as Map<String, Any>
+        mData = RunData(extra)
 
-        var durationString = SimpleDateFormat("mm:ss:SSS").format(Date(duration))
+        var durationString = SimpleDateFormat("mm:ss:SSS").format(Date(mData.getDurationInMillis()))
 
         var mapView: MapView = findViewById(R.id.map)
         var textDate: TextView = findViewById(R.id.text_date)
         var textDuration: TextView = findViewById(R.id.text_duration)
         var textDistance: TextView = findViewById(R.id.text_distance)
 
-        textDistance.text = "Distance: $distance m"
+        textDistance.text = String.format("Distance: %.2f m", mData.getDistance())
         textDuration.text = "Duration: $durationString"
-        textDate.text = SimpleDateFormat("dd/MM/yyyy").format(Date(date))
+        textDate.text = SimpleDateFormat("dd/MM/yyyy").format(Date(mData.getDateInMillis()))
 
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
@@ -59,11 +49,11 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
             map.uiSettings.isZoomControlsEnabled = false
             map.uiSettings.isScrollGesturesEnabled = false
 
-            map.addMarker(MarkerOptions().position(mStart))
-            map.addMarker(MarkerOptions().position(mFinish))
+            map.addMarker(MarkerOptions().position(mData.getStartCoordinate()))
+            map.addMarker(MarkerOptions().position(mData.getFinishCoordinate()))
 
-            var center: LatLng = LatLng((mStart.latitude + mFinish.latitude) / 2.0,
-                                        (mStart.longitude + mFinish.longitude) / 2.0)
+            var center: LatLng = LatLng((mData.getStartCoordinate().latitude + mData.getFinishCoordinate().latitude) / 2.0,
+                                        (mData.getStartCoordinate().longitude + mData.getFinishCoordinate().longitude) / 2.0)
             map.moveCamera(CameraUpdateFactory.newLatLng(center))
         }
     }

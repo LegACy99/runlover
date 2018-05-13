@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".TrackActivity">
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
     <TextView
         android:id="@+id/text_duration"
         android:layout_width="wrap_content"
@@ -26,7 +41,7 @@
         android:layout_marginBottom="4dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:text="0 m"
+        android:text="0.00 m"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/button_track"
@@ -39,6 +54,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
+        android:enabled="false"
         android:paddingBottom="20dp"
         android:paddingTop="20dp"
         android:text="Start"
@@ -60,7 +76,7 @@
         app:layout_constraintBottom_toTopOf="@+id/text_duration"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout3" />
 
     <LinearLayout
         android:id="@+id/linearLayout"

@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">RunLover</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="app_name">Run Lover</string>
+    <string name="title_activity_home">Run Lover</string>
+    <string name="title_activity_track">Track Run</string>
+    <string name="title_activity_detail">Run Detail</string>
     <string name="title_activity_maps">Map</string>
 </resources>
